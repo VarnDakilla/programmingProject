@@ -1,0 +1,37 @@
+<!doctype html>
+
+<body>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <script>
+        var canvas, canvasContext;
+
+        window.onload = function() {
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
+
+            setInterval(mainLoop, 1000 / 50);
+        }
+
+        var playerXpos = 0;
+        var playerYpos = 0;
+        var playerXspeed = 10;
+        var playerYspeed = 10;
+        var playerWidth = 20;
+        var playerHeight = 40;
+
+        
+        
+         function mainLoop() {
+            colorRect(0, 0, canvas.width, canvas.height, 'black') //bg
+            colorRect(playerXpos, playerYpos, playerWidth, playerHeight, 'red') //player
+            colorRect(playerXpos, playerYpospos, playerWidth, playerHeight, 'red') // player
+         }
+        
+        
+              function colorRect(x, y, w, h, color) {
+            canvasContext.fillStyle = color;
+            canvasContext.fillRect(x, y, w, h);
+        }
+
+    </script>
+</body>
