@@ -1,13 +1,19 @@
 <!doctype html>
 
 <body>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
     <script>
-        var canvas, canvasContext;
+        var canvas, canvasContext,imgAssests;
 
         window.onload = function() {
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
+
+            imgAssests = loadImgAssests();
+            
+            document.addEventListener('keydown', keyPressed); //keyPressed = made function 
+
+            document.addEventListener('keyup', keyReleased); //keyReleased = made function 
 
             setInterval(mainLoop, 1000 / 50);
         }
@@ -16,22 +22,120 @@
         var playerYpos = 0;
         var playerXspeed = 10;
         var playerYspeed = 10;
-        var playerWidth = 20;
-        var playerHeight = 40;
+        var playerWidth = 40;
+        var playerHeight = 30;
+        var randomCars = 0;
 
-        
-        
-         function mainLoop() {
+
+        var setUp = true;
+
+        /* playercar KeyPressing */
+        const UP_ARROW_KEY = 38;
+        const DOWN_ARROW_KEY = 40;
+        const Right_ARROW_KEY = 39;
+        const LEFT_ARROW_KEY = 37;
+
+        var upArrowKeyPressed = false;
+        var downArrowKeyPressed = false;
+        var leftARROWKeyPressed = false;
+        var rightARROWKeyPressed = false;
+
+
+
+
+
+
+        function mainLoop() {
             colorRect(0, 0, canvas.width, canvas.height, 'black') //bg
-            colorRect(playerXpos, playerYpos, playerWidth, playerHeight, 'red') //player
-            colorRect(playerXpos, playerYpospos, playerWidth, playerHeight, 'red') // player
-         }
+//            colorRect(playerXpos, playerYpos, playerWidth, playerHeight, 'red') //player
+//            colorRect(playerXpos, playerYpos, playerWidth, playerHeight, 'red') // player
+            
+            makeImages(img.player, playerXpos, playerYpos, playerWidth, playerHeight)
+
+            playermove();
+//            carmove();
+
+            if (setUp) {
+                settingUp();
+                setUp = false;
+            }
+        }
+
+
+        function keyPressed(evt) { //when pressing the key
+            if (evt.keyCode == UP_ARROW_KEY) {
+                upArrowKeyPressed = true;
+            }
+            if (evt.keyCode == DOWN_ARROW_KEY) {
+                downArrowKeyPressed = true;
+            }
+            if (evt.keyCode == Right_ARROW_KEY) {
+                rightARROWKeyPressed = true;
+            }
+            if (evt.keyCode == LEFT_ARROW_KEY) {
+                leftARROWKeyPressed = true;
+            }
+        }
+
+        function keyReleased(evt) { // when I take finger off the key to stop moving
+            if (evt.keyCode == UP_ARROW_KEY) {
+                upArrowKeyPressed = false;
+            }
+            if (evt.keyCode == DOWN_ARROW_KEY) {
+                downArrowKeyPressed = false;
+            }
+            if (evt.keyCode == Right_ARROW_KEY) {
+                rightARROWKeyPressed = false;
+            }
+            if (evt.keyCode == LEFT_ARROW_KEY) {
+                leftARROWKeyPressed = false;
+            }
+        }
+
+
+
+        function movingCars() {
+            randomCars = Math.floor(Math.random() * (40 - 5) + 1);
+        }
+
+        function settingUp() {
+            playerXpos = canvas.width / 2 - playerWidth / 2;
+            playerYpos = canvas.height - playerHeight;
+        }
+
+        function playermove() {
+            if (upArrowKeyPressed) {
+                playerYpos -= playerYspeed;
+            }
+            if (downArrowKeyPressed) {
+                playerYpos += playerYspeed;
+            }
+            if (leftARROWKeyPressed) {
+                playerXpos -= playerXspeed;
+            }
+            if (rightARROWKeyPressed) {
+                playerXpos += playerXspeed;
+            }
+        }
         
-        
-              function colorRect(x, y, w, h, color) {
+        function loadImgAssests(){
+            img = {}
+            img.player = new Image();
+            img.player.src = 'images/player.png';
+            
+            return img;
+            
+        }
+
+
+        function colorRect(x, y, w, h, color) {
             canvasContext.fillStyle = color;
             canvasContext.fillRect(x, y, w, h);
         }
 
+         function makeImages(src,x, y, w, h) {
+            canvasContext.drawImage(src,x, y, w, h)
+        }
+        
     </script>
 </body>
